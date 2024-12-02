@@ -2,7 +2,7 @@ defmodule AdventOfCode.Day02 do
   def part1(input) do
     input
     |> parse_input()
-    |> Enum.filter(&(is_safe?(&1, :asc) or is_safe?(&1, :desc)))
+    |> Enum.filter(&is_safe?/1)
     |> Enum.count()
   end
 
@@ -10,11 +10,14 @@ defmodule AdventOfCode.Day02 do
     input
     |> parse_input()
     |> Enum.filter(fn row ->
-      0..length(row)
-      |> Enum.map(fn index ->
-        partial_list = List.delete_at(row, index)
-        is_safe?(partial_list)
-      end)
+      max_index = length(row) - 1
+
+      0..max_index
+      |> Enum.map(
+        &(row
+          |> List.delete_at(&1)
+          |> is_safe?())
+      )
       |> Enum.any?()
     end)
     |> Enum.count()
@@ -25,7 +28,9 @@ defmodule AdventOfCode.Day02 do
     |> String.trim()
     |> String.split("\n")
     |> Enum.map(fn line ->
-      String.split(line, " ") |> Enum.map(&String.to_integer(&1))
+      line
+      |> String.split(" ")
+      |> Enum.map(&String.to_integer(&1))
     end)
   end
 
