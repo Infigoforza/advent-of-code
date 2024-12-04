@@ -26,7 +26,6 @@ defmodule AdventOfCode.Day03 do
       _, {:dont, value} -> {:dont, value}
       [_, _, n1, n2], {_, value} -> {:do, value + String.to_integer(n1) * String.to_integer(n2)}
     end)
-    |> dbg()
   end
 
   defp parse_input(input) do
