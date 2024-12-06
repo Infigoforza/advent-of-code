@@ -38,7 +38,6 @@ defmodule AdventOfCode.Day05Test do
     assert result == 143
   end
 
-  @tag :skip
   test "part2" do
     input = "47|53
 97|13

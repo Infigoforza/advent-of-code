@@ -27,9 +27,13 @@ defmodule AdventOfCode.Day05 do
         |> Enum.map(&check_instructions(&1, page))
         |> Enum.all?()
 
-      if is_valid? do
+      unless is_valid? do
         index = ((length(page) - 1) / 2) |> round()
-        page |> Enum.at(index) |> String.to_integer()
+
+        page
+        |> Enum.sort(fn x, y -> Enum.any?(instructions, &([x, y] == &1)) end)
+        |> Enum.at(index)
+        |> String.to_integer()
       else
         0
       end
